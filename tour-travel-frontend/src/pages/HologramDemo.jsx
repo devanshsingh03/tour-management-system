@@ -121,9 +121,9 @@ export default function HologramDemo() {
 
         <p className="text-gray-300 text-center max-w-xl mx-auto mb-8">
           A 3D rotating Earth hologram that works for all destinations.
-        </p>
+        </p> 
 
-        {/* 3D Globe */}
+        
         <model-viewer
           src="https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Earth/Earth.gltf"
           alt="3D Globe"

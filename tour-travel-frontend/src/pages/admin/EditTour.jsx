@@ -1,17 +1,267 @@
+// // src/pages/admin/EditTour.jsx
+
+// import React, { useEffect, useState } from "react";
+// import { useNavigate, useParams } from "react-router-dom";
+// import axios from "axios";
+// import AOS from "aos";
+// import "aos/dist/aos.css";
+// import { BASE_URL } from "../../config";
+
+// export default function EditTour() {
+//   const { id } = useParams();
+//   const navigate = useNavigate();
+
+//   const [loading, setLoading] = useState(true);
+//   const [saving, setSaving] = useState(false);
+//   const [error, setError] = useState("");
+
+//   const [tour, setTour] = useState({
+//     title: "",
+//     location: "",
+//     duration: "",
+//     price: "",
+//     description: "",
+//     images: [""],
+//     highlights: [""],
+//     itinerary: [{ day: "", detail: "" }],
+//   });
+
+//   // Fetch tour
+//   const fetchTour = async () => {
+//     try {
+//       setLoading(true);
+//       const res = await axios.get(`${BASE_URL}/tours/${id}`);
+//       const t = res.data.tour;
+
+//       setTour({
+//         title: t.title,
+//         location: t.location,
+//         duration: t.duration,
+//         price: t.price,
+//         description: t.description,
+//         images: t.images.length ? t.images : [""],
+//         highlights: t.highlights.length ? t.highlights : [""],
+//         itinerary:
+//           t.itinerary.length ? t.itinerary : [{ day: "", detail: "" }],
+//       });
+//     } catch (err) {
+//       setError("Failed to load tour");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     AOS.init({ duration: 900, once: true });
+//     fetchTour();
+//   }, []);
+
+//   // Basic field change
+//   const handleChange = (e) => {
+//     setTour({ ...tour, [e.target.name]: e.target.value });
+//   };
+
+//   // Array fields (images, highlights)
+//   const handleArrayChange = (e, index, field) => {
+//     const temp = [...tour[field]];
+//     temp[index] = e.target.value;
+//     setTour({ ...tour, [field]: temp });
+//   };
+
+//   // Itinerary changes
+//   const handleItineraryChange = (e, index, field) => {
+//     const temp = [...tour.itinerary];
+//     temp[index][field] = e.target.value;
+//     setTour({ ...tour, itinerary: temp });
+//   };
+
+//   // Add new field
+//   const addField = (field) => {
+//     if (field === "itinerary") {
+//       setTour({
+//         ...tour,
+//         itinerary: [...tour.itinerary, { day: "", detail: "" }],
+//       });
+//     } else {
+//       setTour({ ...tour, [field]: [...tour[field], ""] });
+//     }
+//   };
+
+//   // Submit update
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setSaving(true);
+
+//     try {
+//       await axios.patch(`${BASE_URL}/tours/${id}`, tour);
+//       alert("Tour updated successfully");
+//       navigate("/admin/manage-tours");
+//     } catch (err) {
+//       setError("Failed to update tour");
+//     } finally {
+//       setSaving(false);
+//     }
+//   };
+
+//   if (loading) {
+//     return (
+//       <div className="min-h-screen bg-[#030617] text-white flex items-center justify-center">
+//         Loading...
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="min-h-screen bg-[#030617] text-white px-6 py-10">
+//       <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 p-10 rounded-xl">
+
+//         <h1 className="text-3xl font-bold mb-6">Edit Tour</h1>
+
+//         {error && (
+//           <div className="text-red-400 mb-4">{error}</div>
+//         )}
+
+//         <form onSubmit={handleSubmit} className="space-y-6">
+
+//           {/* Title */}
+//           <div>
+//             <label>Title</label>
+//             <input
+//               name="title"
+//               value={tour.title}
+//               onChange={handleChange}
+//               className="input"
+//             />
+//           </div>
+
+//           {/* Location */}
+//           <div>
+//             <label>Location</label>
+//             <input
+//               name="location"
+//               value={tour.location}
+//               onChange={handleChange}
+//               className="input"
+//             />
+//           </div>
+
+//           {/* Duration */}
+//           <div>
+//             <label>Duration (Days)</label>
+//             <input
+//               name="duration"
+//               type="number"
+//               value={tour.duration}
+//               onChange={handleChange}
+//               className="input"
+//             />
+//           </div>
+
+//           {/* Price */}
+//           <div>
+//             <label>Price (₹)</label>
+//             <input
+//               name="price"
+//               type="number"
+//               value={tour.price}
+//               onChange={handleChange}
+//               className="input"
+//             />
+//           </div>
+
+//           {/* Description */}
+//           <div>
+//             <label>Description</label>
+//             <textarea
+//               name="description"
+//               rows="4"
+//               value={tour.description}
+//               onChange={handleChange}
+//               className="input"
+//             />
+//           </div>
+
+//           {/* Images */}
+//           <div>
+//             <h3 className="text-xl">Images</h3>
+//             {tour.images.map((img, i) => (
+//               <input
+//                 key={i}
+//                 value={img}
+//                 onChange={(e) => handleArrayChange(e, i, "images")}
+//                 className="input mt-3"
+//                 placeholder={`Image URL ${i + 1}`}
+//               />
+//             ))}
+//             <button type="button" className="btn" onClick={() => addField("images")}>
+//               + Add Image
+//             </button>
+//           </div>
+
+//           {/* Highlights */}
+//           <div>
+//             <h3 className="text-xl">Highlights</h3>
+//             {tour.highlights.map((h, i) => (
+//               <input
+//                 key={i}
+//                 value={h}
+//                 onChange={(e) => handleArrayChange(e, i, "highlights")}
+//                 className="input mt-3"
+//                 placeholder={`Highlight ${i + 1}`}
+//               />
+//             ))}
+//             <button type="button" className="btn" onClick={() => addField("highlights")}>
+//               + Add Highlight
+//             </button>
+//           </div>
+
+//           {/* Itinerary */}
+//           <div>
+//             <h3 className="text-xl">Itinerary</h3>
+//             {tour.itinerary.map((it, i) => (
+//               <div key={i} className="flex gap-4 mt-3">
+//                 <input
+//                   value={it.day}
+//                   onChange={(e) => handleItineraryChange(e, i, "day")}
+//                   className="input"
+//                   placeholder="Day"
+//                 />
+//                 <input
+//                   value={it.detail}
+//                   onChange={(e) => handleItineraryChange(e, i, "detail")}
+//                   className="input flex-1"
+//                   placeholder="Detail"
+//                 />
+//               </div>
+//             ))}
+//             <button type="button" className="btn" onClick={() => addField("itinerary")}>
+//               + Add Day
+//             </button>
+//           </div>
+
+//           {/* Save Button */}
+//           <button
+//             type="submit"
+//             className="py-3 px-6 bg-blue-500 rounded-lg font-bold"
+//             disabled={saving}
+//           >
+//             {saving ? "Saving..." : "Save Changes"}
+//           </button>
+
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
+
 // src/pages/admin/EditTour.jsx
+
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import axios from "axios";
-
-/**
- * NOTE: using the uploaded local file as a placeholder image.
- * Path used:
- * /mnt/data/Screenshot (1745).png
- * Replace with your public URL when ready.
- */
-const placeholderImage = "/mnt/data/Screenshot (1745).png";
+import { BASE_URL } from "../../config";
 
 export default function EditTour() {
   const { id } = useParams();
@@ -23,99 +273,95 @@ export default function EditTour() {
 
   const [tour, setTour] = useState({
     title: "",
-    country: "",
-    price: "",
+    location: "",
     duration: "",
+    price: "",
     description: "",
-    highlights: "",
-    image: "",
+    images: [""],
+    highlights: [""],
+    itinerary: [{ day: "", detail: "" }],
   });
 
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-  }, []);
-
-  useEffect(() => {
-    // Try to fetch from backend; fall back to demo data so UI never breaks.
-    const fetchTour = async () => {
+  // Fetch tour
+  
+  const fetchTour = async () => {
+    try {
       setLoading(true);
-      setError("");
-      try {
-        // If you have backend: GET /api/tours/:id
-        const res = await axios.get(`/api/tours/${id}`);
-        const data = res.data;
-        setTour({
-          title: data.title || "",
-          country: data.location || data.country || "",
-          price: data.price || "",
-          duration: data.duration || "",
-          description: data.summary || data.description || "",
-          highlights: (data.highlights && data.highlights.join(", ")) || "",
-          image: data.img || data.image || "",
-        });
-      } catch (err) {
-        // fallback demo (so the page is usable without backend)
-        setTour({
-          title: "Swiss Alps Escape",
-          country: "Switzerland",
-          price: 120000,
-          duration: 5,
-          description:
-            "A breathtaking alpine tour with guided treks, chalet stays and photography sessions.",
-          highlights: "Alps,Photography,Guided-Trek",
-          image: placeholderImage,
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${BASE_URL}/tours/${id}`,{
+        headers: {Authorization :`Bearer ${token}`}
+      });
+      const t = res.data;
 
-    fetchTour();
-  }, [id]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTour((t) => ({ ...t, [name]: value }));
+      setTour({
+        title: t.title,
+        location: t.location,
+        duration: t.duration,
+        price: t.price,
+        description: t.description,
+        images: t.images.length ? t.images : [""],
+        highlights: t.highlights.length ? t.highlights : [""],
+        itinerary:
+          t.itinerary.length ? t.itinerary : [{ day: "", detail: "" }],
+      });
+    } catch (err) {
+      setError("Failed to load tour");
+    } finally {
+      setLoading(false);
+    }
   };
 
+  useEffect(() => {
+    AOS.init({ duration: 900, once: true });
+    fetchTour();
+  }, []);
+
+  // Basic field change
+  const handleChange = (e) => {
+    setTour({ ...tour, [e.target.name]: e.target.value });
+  };
+
+  // Array fields (images, highlights)
+  const handleArrayChange = (e, index, field) => {
+    const temp = [...tour[field]];
+    temp[index] = e.target.value;
+    setTour({ ...tour, [field]: temp });
+  };
+
+  // Itinerary changes
+  const handleItineraryChange = (e, index, field) => {
+    const temp = [...tour.itinerary];
+    temp[index][field] = e.target.value;
+    setTour({ ...tour, itinerary: temp });
+  };
+
+  // Add new field
+  const addField = (field) => {
+    if (field === "itinerary") {
+      setTour({
+        ...tour,
+        itinerary: [...tour.itinerary, { day: "", detail: "" }],
+      });
+    } else {
+      setTour({ ...tour, [field]: [...tour[field], ""] });
+    }
+  };
+
+  // Submit update
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    setError("");
-
-    // Basic validation
-    if (!tour.title || !tour.country || !tour.price || !tour.duration) {
-      setError("Please fill title, country, price and duration.");
-      setSaving(false);
-      return;
-    }
 
     try {
-      // If backend exists, send PATCH (update) request.
-      // Otherwise this will fail silently and we show a success message for the demo.
-      await axios.patch(
-        `/api/tours/${id}`,
-        {
-          title: tour.title,
-          location: tour.country,
-          price: Number(tour.price),
-          duration: Number(tour.duration),
-          summary: tour.description,
-          highlights: tour.highlights.split(",").map((s) => s.trim()).filter(Boolean),
-          img: tour.image,
-        },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}` },
-        }
-      );
-
-      alert("Tour updated (if backend available).");
-      // optionally navigate back to manage tours
+      const token = localStorage.getItem("token");
+      await axios.put(`${BASE_URL}/tours/${id}`, tour,{
+        headers: {Authorization: `Bearer ${token}`}
+      });
+      alert("Tour updated successfully");
       navigate("/admin/manage-tours");
     } catch (err) {
-      // If backend not present or returns error, show message but keep UI usable
-      console.error("Update error:", err);
-      setError(err.response?.data?.message || "Failed to update tour (or backend not available).");
+      setError("Failed to update tour");
     } finally {
       setSaving(false);
     }
@@ -124,125 +370,148 @@ export default function EditTour() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#030617] text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="mb-2 animate-pulse">Loading tour data...</div>
-          <div className="text-gray-400 text-sm">Fetching tour #{id} (or using demo)</div>
-        </div>
+        Loading...
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-[#030617] text-white px-6 py-10">
-      <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 backdrop-blur-xl p-8 rounded-2xl shadow-2xl">
-        <div className="flex items-center gap-6 mb-6">
-          <img
-            src={tour.image || placeholderImage}
-            alt={tour.title}
-            className="w-28 h-20 rounded-lg object-cover shadow-lg ring-1 ring-white/10"
-          />
-          <div>
-            <h2 className="text-2xl font-extrabold">{tour.title}</h2>
-            <p className="text-gray-300 text-sm">{tour.country} • {tour.duration} days</p>
-          </div>
-        </div>
+      <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 p-10 rounded-xl">
+
+        <h1 className="text-3xl font-bold mb-6">Edit Tour</h1>
+
+        {error && (
+          <div className="text-red-400 mb-4">{error}</div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm text-gray-300">Title</label>
-              <input
-                name="title"
-                value={tour.title}
-                onChange={handleChange}
-                className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-[#00F2FE]"
-              />
-            </div>
 
-            <div>
-              <label className="text-sm text-gray-300">Country</label>
-              <input
-                name="country"
-                value={tour.country}
-                onChange={handleChange}
-                className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-[#00F2FE]"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm text-gray-300">Price (₹)</label>
-              <input
-                name="price"
-                type="number"
-                value={tour.price}
-                onChange={handleChange}
-                className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-[#00F2FE]"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm text-gray-300">Duration (days)</label>
-              <input
-                name="duration"
-                type="number"
-                value={tour.duration}
-                onChange={handleChange}
-                className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-[#00F2FE]"
-              />
-            </div>
+          {/* Title */}
+          <div>
+            <label>Title</label>
+            <input
+              name="title"
+              value={tour.title}
+              onChange={handleChange}
+              className="input"
+            />
           </div>
 
+          {/* Location */}
           <div>
-            <label className="text-sm text-gray-300">Description</label>
+            <label>Location</label>
+            <input
+              name="location"
+              value={tour.location}
+              onChange={handleChange}
+              className="input"
+            />
+          </div>
+
+          {/* Duration */}
+          <div>
+            <label>Duration (Days)</label>
+            <input
+              name="duration"
+              type="number"
+              value={tour.duration}
+              onChange={handleChange}
+              className="input"
+            />
+          </div>
+
+          {/* Price */}
+          <div>
+            <label>Price (₹)</label>
+            <input
+              name="price"
+              type="number"
+              value={tour.price}
+              onChange={handleChange}
+              className="input"
+            />
+          </div>
+
+          {/* Description */}
+          <div>
+            <label>Description</label>
             <textarea
               name="description"
+              rows="4"
               value={tour.description}
               onChange={handleChange}
-              rows="4"
-              className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-[#00F2FE]"
+              className="input"
             />
           </div>
 
+          {/* Images */}
           <div>
-            <label className="text-sm text-gray-300">Highlights (comma separated)</label>
-            <input
-              name="highlights"
-              value={tour.highlights}
-              onChange={handleChange}
-              className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-[#00F2FE]"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm text-gray-300">Image URL</label>
-            <input
-              name="image"
-              value={tour.image}
-              onChange={handleChange}
-              className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-[#00F2FE]"
-              placeholder="https://example.com/image.jpg"
-            />
-          </div>
-
-          {error && <div className="text-red-400">{error}</div>}
-
-          <div className="flex gap-4 items-center">
-            <button
-              type="submit"
-              disabled={saving}
-              className="py-3 px-6 rounded-full bg-gradient-to-r from-[#00F2FE] to-[#7C4CFF] text-black font-semibold hover:opacity-90 transition"
-            >
-              {saving ? "Saving..." : "Save Changes"}
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate("/admin/manage-tours")}
-              className="py-3 px-5 rounded-full border border-white/10 hover:bg-white/5 transition"
-            >
-              Cancel
+            <h3 className="text-xl">Images</h3>
+            {tour.images.map((img, i) => (
+              <input
+                key={i}
+                value={img}
+                onChange={(e) => handleArrayChange(e, i, "images")}
+                className="input mt-3"
+                placeholder={`Image URL ${i + 1}`}
+              />
+            ))}
+            <button type="button" className="btn" onClick={() => addField("images")}>
+              + Add Image
             </button>
           </div>
+
+          {/* Highlights */}
+          <div>
+            <h3 className="text-xl">Highlights</h3>
+            {tour.highlights.map((h, i) => (
+              <input
+                key={i}
+                value={h}
+                onChange={(e) => handleArrayChange(e, i, "highlights")}
+                className="input mt-3"
+                placeholder={`Highlight ${i + 1}`}
+              />
+            ))}
+            <button type="button" className="btn" onClick={() => addField("highlights")}>
+              + Add Highlight
+            </button>
+          </div>
+
+          {/* Itinerary */}
+          <div>
+            <h3 className="text-xl">Itinerary</h3>
+            {tour.itinerary.map((it, i) => (
+              <div key={i} className="flex gap-4 mt-3">
+                <input
+                  value={it.day}
+                  onChange={(e) => handleItineraryChange(e, i, "day")}
+                  className="input"
+                  placeholder="Day"
+                />
+                <input
+                  value={it.detail}
+                  onChange={(e) => handleItineraryChange(e, i, "detail")}
+                  className="input flex-1"
+                  placeholder="Detail"
+                />
+              </div>
+            ))}
+            <button type="button" className="btn" onClick={() => addField("itinerary")}>
+              + Add Day
+            </button>
+          </div>
+
+          {/* Save Button */}
+          <button
+            type="submit"
+            className="py-3 px-6 bg-blue-500 rounded-lg font-bold"
+            disabled={saving}
+          >
+            {saving ? "Saving..." : "Save Changes"}
+          </button>
+
         </form>
       </div>
     </div>

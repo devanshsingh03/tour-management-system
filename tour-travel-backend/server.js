@@ -6,8 +6,8 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-
 import tourRoutes from "./routes/tourRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 
@@ -24,7 +24,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/tours", tourRoutes);
-// router.post("/add")
+app.use("/api/user" , userRoutes);
+
+//router.post("/add")
 // Test route
 app.get("/", (req, res) => {
   res.send("Backend running successfully...");

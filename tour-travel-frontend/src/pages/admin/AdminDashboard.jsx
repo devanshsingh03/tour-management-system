@@ -1,242 +1,3 @@
-// // src/pages/admin/AdminDashboard.jsx
-// import React, { useEffect, useState } from "react";
-// import AOS from "aos";
-// import "aos/dist/aos.css";
-// import { FaGlobeAmericas, FaUserFriends, FaReceipt, FaPassport, FaPlus, FaList } from "react-icons/fa";
-// import { useNavigate } from "react-router-dom";
-
-// /**
-//  * NOTE: placeholderImage uses the local path you uploaded.
-//  */
-// const placeholderImage = "/mnt/data/Screenshot (1745).png";
-
-// export default function AdminDashboard() {
-
-//   const navigate = useNavigate();  // ✅ FIXED — correctly inside component
-
-//   useEffect(() => {
-//     AOS.init({ duration: 800, once: true });
-//   }, []);
-
-
-//   // demo stats and data (replace with API data later)
-//   const [stats, setStats] = useState({
-//     tours: 12,
-//     users: 234,
-//     bookings: 78,
-//     revenue: 125000,
-//   });
-
-//   const [recentBookings, setRecentBookings] = useState([
-//     {
-//       id: "BKG-1001",
-//       user: "Anita Sharma",
-//       tour: "Swiss Alps Escape",
-//       date: "2025-12-20",
-//       amount: 45000,
-//       status: "Confirmed",
-//     },
-//     {
-//       id: "BKG-1002",
-//       user: "Rohan Mehta",
-//       tour: "Goa Sun & Surf",
-//       date: "2025-11-05",
-//       amount: 12000,
-//       status: "Pending",
-//     },
-//     {
-//       id: "BKG-1003",
-//       user: "Priya Singh",
-//       tour: "Desert Dunes Dubai",
-//       date: "2025-10-14",
-//       amount: 22000,
-//       status: "Confirmed",
-//     },
-//   ]);
-
-//   return (
-//     <div className="min-h-screen bg-[#030617] text-white">
-//       <div className="flex">
-//         {/* Sidebar */}
-//         <aside className="w-72 min-h-screen p-6 bg-gradient-to-b from-[#050712]/60 to-[#000000]/40 border-r border-white/5 backdrop-blur-lg">
-//           <div className="mb-8 flex items-center gap-3">
-//             <img src={placeholderImage} alt="logo" className="w-12 h-12 rounded-lg object-cover shadow-lg ring-1 ring-white/10" />
-//             <div>
-//               <h3 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FE] to-[#7C4CFF]">TourX Admin</h3>
-//               <p className="text-sm text-gray-300">Administrator</p>
-//             </div>
-//           </div>
-
-//           <nav className="space-y-2">
-//             <button className="w-full text-left px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 transition flex items-center gap-3">
-//               <FaGlobeAmericas className="text-xl text-[#00F2FE]" />
-//               <span>Dashboard</span>
-//             </button>
-
-//             <button
-//   onClick={() => navigate("/admin/add-tour")}
-//   className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"
-// >
-//   <FaPlus className="text-xl text-[#4FACFE]" />
-//   <span>Add Tour</span>
-// </button>
-
-
-//             <button
-//   onClick={() => navigate("/admin/manage-tours")}
-//   className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"
-// >
-//   <FaList className="text-xl text-[#7C4CFF]" />
-//   <span>Manage Tours</span>
-// </button>
-
-
-//             <button
-//   onClick={() => navigate("/admin/view-bookings")}
-//   className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"
-// >
-//   <FaReceipt className="text-xl text-[#00F2FE]" />
-//   <span>View Bookings</span>
-// </button>
-
-
-//             <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3">
-//               <FaUserFriends className="text-xl text-[#4FACFE]" />
-//               <span>Manage Users</span>
-//             </button>
-
-//             <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-red-600/20 mt-4 transition">
-//               Logout
-//             </button>
-//           </nav>
-
-//           <div className="mt-8 p-3 rounded-lg bg-white/3 border border-white/5 text-sm">
-//             <div className="text-gray-300">Quick Actions</div>
-//             <div className="flex gap-2 mt-3">
-//               <button className="flex-1 py-2 rounded-lg bg-gradient-to-r from-[#00F2FE] to-[#4FACFE] text-black font-semibold">New Tour</button>
-//               <button className="flex-1 py-2 rounded-lg border border-white/10">Reports</button>
-//             </div>
-//           </div>
-//         </aside>
-
-//         {/* Main Content */}
-//         <main className="flex-1 p-10">
-//           <header className="flex items-center justify-between">
-//             <div>
-//               <h1 className="text-3xl font-extrabold">Admin Dashboard</h1>
-//               <p className="text-gray-300 mt-1">Overview of your tours, bookings and revenue</p>
-//             </div>
-
-//             <div className="flex items-center gap-4">
-//               <div className="text-right">
-//                 <div className="text-sm text-gray-400">Welcome back</div>
-//                 <div className="font-semibold">Admin</div>
-//               </div>
-//               <img src={placeholderImage} alt="admin" className="w-12 h-12 rounded-full object-cover ring-2 ring-white/10" />
-//             </div>
-//           </header>
-
-//           {/* Stats cards */}
-//           <section className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-//             <div data-aos="fade-up" className="p-6 rounded-2xl bg-gradient-to-r from-[#021027]/60 to-[#000819]/50 border border-white/6 shadow-lg">
-//               <div className="flex items-center justify-between">
-//                 <div>
-//                   <div className="text-sm text-gray-300">Total Tours</div>
-//                   <div className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FE] to-[#7C4CFF]">{stats.tours}</div>
-//                 </div>
-//                 <div className="p-3 rounded-lg bg-white/5"><FaPassport className="text-xl text-[#00F2FE]" /></div>
-//               </div>
-//             </div>
-
-//             <div data-aos="fade-up" data-aos-delay="120" className="p-6 rounded-2xl bg-gradient-to-r from-[#021027]/60 to-[#000819]/50 border border-white/6 shadow-lg">
-//               <div className="flex items-center justify-between">
-//                 <div>
-//                   <div className="text-sm text-gray-300">Total Users</div>
-//                   <div className="text-3xl font-extrabold text-green-300">{stats.users}</div>
-//                 </div>
-//                 <div className="p-3 rounded-lg bg-white/5"><FaUserFriends className="text-xl text-green-300" /></div>
-//               </div>
-//             </div>
-
-//             <div data-aos="fade-up" data-aos-delay="240" className="p-6 rounded-2xl bg-gradient-to-r from-[#021027]/60 to-[#000819]/50 border border-white/6 shadow-lg">
-//               <div className="flex items-center justify-between">
-//                 <div>
-//                   <div className="text-sm text-gray-300">Total Bookings</div>
-//                   <div className="text-3xl font-extrabold text-yellow-300">{stats.bookings}</div>
-//                 </div>
-//                 <div className="p-3 rounded-lg bg-white/5"><FaReceipt className="text-xl text-yellow-300" /></div>
-//               </div>
-//             </div>
-
-//             <div data-aos="fade-up" data-aos-delay="360" className="p-6 rounded-2xl bg-gradient-to-r from-[#021027]/60 to-[#000819]/50 border border-white/6 shadow-lg">
-//               <div className="flex items-center justify-between">
-//                 <div>
-//                   <div className="text-sm text-gray-300">Total Revenue</div>
-//                   <div className="text-3xl font-extrabold text-purple-300">₹{stats.revenue.toLocaleString()}</div>
-//                 </div>
-//                 <div className="p-3 rounded-lg bg-white/5"><FaGlobeAmericas className="text-xl text-purple-300" /></div>
-//               </div>
-//             </div>
-//           </section>
-
-//           {/* Content area: recent bookings + quick list */}
-//           <section className="mt-10 grid md:grid-cols-3 gap-6">
-//             <div data-aos="fade-up" className="md:col-span-2 rounded-2xl bg-white/5 border border-white/10 p-6">
-//               <div className="flex items-center justify-between mb-4">
-//                 <h3 className="text-xl font-semibold">Recent Bookings</h3>
-//                 <button className="px-4 py-2 rounded-lg bg-white/6 hover:bg-white/10 transition">View all</button>
-//               </div>
-
-//               <table className="w-full text-left">
-//                 <thead>
-//                   <tr className="text-sm text-gray-400 border-b border-white/6">
-//                     <th className="py-3">Booking ID</th>
-//                     <th className="py-3">User</th>
-//                     <th className="py-3">Tour</th>
-//                     <th className="py-3">Date</th>
-//                     <th className="py-3">Amount</th>
-//                     <th className="py-3">Status</th>
-//                   </tr>
-//                 </thead>
-//                 <tbody>
-//                   {recentBookings.map((r, i) => (
-//                     <tr key={r.id} className={`border-b border-white/6 ${i % 2 === 0 ? "bg-white/2" : ""}`}>
-//                       <td className="py-4">{r.id}</td>
-//                       <td className="py-4">{r.user}</td>
-//                       <td className="py-4">{r.tour}</td>
-//                       <td className="py-4">{r.date}</td>
-//                       <td className="py-4">₹{r.amount.toLocaleString()}</td>
-//                       <td className="py-4">
-//                         <span className={`px-3 py-1 rounded-full text-sm ${r.status === "Confirmed" ? "bg-green-600/20 text-green-300" : "bg-yellow-600/20 text-yellow-300"}`}>
-//                           {r.status}
-//                         </span>
-//                       </td>
-//                     </tr>
-//                   ))}
-//                 </tbody>
-//               </table>
-//             </div>
-
-//             <aside data-aos="fade-up" className="rounded-2xl bg-white/5 border border-white/10 p-6">
-//               <h4 className="font-semibold text-lg">Quick Insights</h4>
-//               <ul className="mt-4 space-y-3 text-gray-300">
-//                 <li><strong>Top country:</strong> Switzerland</li>
-//                 <li><strong>Busiest month:</strong> December</li>
-//                 <li><strong>Avg. booking:</strong> ₹37,500</li>
-//               </ul>
-
-//               <div className="mt-6">
-//                 <button className="w-full py-3 rounded-lg bg-gradient-to-r from-[#00F2FE] to-[#7C4CFF] text-black font-bold">Export CSV</button>
-//               </div>
-//             </aside>
-//           </section>
-//         </main>
-//       </div>
-//     </div>
-//   );
-// }
-
-
 // src/pages/admin/AdminDashboard.jsx
 import React, { useEffect, useState } from "react";
 import AOS from "aos";
@@ -249,13 +10,27 @@ import {
   FaPlus,
   FaList,
 } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../config";
 
-const placeholderImage = "/admin.png"; // FIXED
+const placeholderImage = "/admin.png";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const [stats, setStats] = useState({
+    tours: 0,
+    users: 0,
+    bookings: 0,
+    revenue: 0,
+  });
+
+  const [recentBookings, setRecentBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Verify admin login
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
 
@@ -265,41 +40,31 @@ export default function AdminDashboard() {
     if (!token || role !== "admin") {
       navigate("/admin/login");
     }
+
+    loadDashboard();
   }, []);
 
-  const [stats] = useState({
-    tours: 12,
-    users: 234,
-    bookings: 78,
-    revenue: 125000,
-  });
+  // Load stats + recent bookings from backend
+  const loadDashboard = async () => {
+    try {
+      setLoading(true);
 
-  const [recentBookings] = useState([
-    {
-      id: "BKG-1001",
-      user: "Anita Sharma",
-      tour: "Swiss Alps Escape",
-      date: "2025-12-20",
-      amount: 45000,
-      status: "Confirmed",
-    },
-    {
-      id: "BKG-1002",
-      user: "Rohan Mehta",
-      tour: "Goa Sun & Surf",
-      date: "2025-11-05",
-      amount: 12000,
-      status: "Pending",
-    },
-    {
-      id: "BKG-1003",
-      user: "Priya Singh",
-      tour: "Desert Dunes Dubai",
-      date: "2025-10-14",
-      amount: 22000,
-      status: "Confirmed",
-    },
-  ]);
+      const res1 = await axios.get(`${BASE_URL}/admin/stats`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      const res2 = await axios.get(`${BASE_URL}/admin/recent-bookings`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      setStats(res1.data);
+      setRecentBookings(res2.data.bookings || []);
+    } catch (err) {
+      console.log("Dashboard error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -307,11 +72,22 @@ export default function AdminDashboard() {
     navigate("/admin/login");
   };
 
+  const isActive = (route) =>
+    location.pathname === route ? "bg-white/10" : "hover:bg-white/5";
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#030617] text-white flex items-center justify-center">
+        Loading dashboard...
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#030617] text-white">
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-72 min-h-screen p-6 bg-gradient-to-b from-[#050712]/60 to-[#000000]/40 border-r border-white/5 backdrop-blur-lg">
+        <aside className="w-72 min-h-screen p-6 bg-[#050712]/40 border-r border-white/5 backdrop-blur-xl">
           <div className="mb-8 flex items-center gap-3">
             <img
               src={placeholderImage}
@@ -327,198 +103,124 @@ export default function AdminDashboard() {
           </div>
 
           <nav className="space-y-2">
-            <button className="w-full text-left px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 transition flex items-center gap-3">
+            <button className={`w-full px-4 py-3 rounded-lg flex items-center gap-3 ${isActive("/admin/dashboard")}`}>
               <FaGlobeAmericas className="text-xl text-[#00F2FE]" />
-              <span>Dashboard</span>
+              Dashboard
             </button>
 
             <button
               onClick={() => navigate("/admin/add-tour")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"
+              className={`w-full px-4 py-3 rounded-lg flex items-center gap-3 ${isActive("/admin/add-tour")}`}
             >
               <FaPlus className="text-xl text-[#4FACFE]" />
-              <span>Add Tour</span>
+              Add Tour
             </button>
 
             <button
               onClick={() => navigate("/admin/manage-tours")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"
+              className={`w-full px-4 py-3 rounded-lg flex items-center gap-3 ${isActive("/admin/manage-tours")}`}
             >
               <FaList className="text-xl text-[#7C4CFF]" />
-              <span>Manage Tours</span>
+              Manage Tours
             </button>
 
             <button
               onClick={() => navigate("/admin/view-bookings")}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"
+              className={`w-full px-4 py-3 rounded-lg flex items-center gap-3 ${isActive("/admin/view-bookings")}`}
             >
               <FaReceipt className="text-xl text-[#00F2FE]" />
-              <span>View Bookings</span>
-            </button>
-
-            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3">
-              <FaUserFriends className="text-xl text-[#4FACFE]" />
-              <span>Manage Users</span>
+              View Bookings
             </button>
 
             <button
               onClick={handleLogout}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-red-600/20 mt-4 transition"
+              className="w-full px-4 py-3 rounded-lg hover:bg-red-600/20 transition mt-6"
             >
               Logout
             </button>
           </nav>
         </aside>
 
-        {/* Main */}
+        {/* Main Content */}
         <main className="flex-1 p-10">
           <header className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-extrabold">Admin Dashboard</h1>
-              <p className="text-gray-300 mt-1">
-                Overview of your tours, bookings and revenue
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <div className="text-sm text-gray-400">Welcome back</div>
-                <div className="font-semibold">Admin</div>
-              </div>
-              <img
-                src={placeholderImage}
-                alt="admin"
-                className="w-12 h-12 rounded-full object-cover ring-2 ring-white/10"
-              />
-            </div>
+            <h1 className="text-3xl font-extrabold">Admin Dashboard</h1>
+            <img
+              src={placeholderImage}
+              alt="admin"
+              className="w-12 h-12 rounded-full ring-2 ring-white/10"
+            />
           </header>
 
-          {/* Stats */}
+          {/* Stats Cards */}
           <section className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-[#021027]/60 to-[#000819]/50 border border-white/6 shadow-lg">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm text-gray-300">Total Tours</div>
-                  <div className="text-3xl font-extrabold text-[#00F2FE]">
-                    {stats.tours}
-                  </div>
-                </div>
-                <FaPassport className="text-2xl text-[#00F2FE]" />
-              </div>
-            </div>
+            {/* Total Tours */}
+            <StatCard label="Total Tours" value={stats.tours} icon={<FaPassport />} color="#00F2FE" />
 
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-[#021027]/60 to-[#000819]/50 border border-white/6 shadow-lg">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm text-gray-300">Total Users</div>
-                  <div className="text-3xl font-extrabold text-green-300">
-                    {stats.users}
-                  </div>
-                </div>
-                <FaUserFriends className="text-2xl text-green-300" />
-              </div>
-            </div>
+            {/* Users */}
+            <StatCard label="Total Users" value={stats.users} icon={<FaUserFriends />} color="#4CDC84" />
 
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-[#021027]/60 to-[#000819]/50 border border-white/6 shadow-lg">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm text-gray-300">Total Bookings</div>
-                  <div className="text-3xl font-extrabold text-yellow-300">
-                    {stats.bookings}
-                  </div>
-                </div>
-                <FaReceipt className="text-2xl text-yellow-300" />
-              </div>
-            </div>
+            {/* Bookings */}
+            <StatCard label="Total Bookings" value={stats.bookings} icon={<FaReceipt />} color="#FFD93D" />
 
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-[#021027]/60 to-[#000819]/50 border border-white/6 shadow-lg">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm text-gray-300">Total Revenue</div>
-                  <div className="text-3xl font-extrabold text-purple-300">
-                    ₹{stats.revenue.toLocaleString()}
-                  </div>
-                </div>
-                <FaGlobeAmericas className="text-2xl text-purple-300" />
-              </div>
-            </div>
+            {/* Revenue */}
+            <StatCard
+              label="Total Revenue"
+              value={"₹" + ((stats.revenue || 0).toLocaleString())}
+              icon={<FaGlobeAmericas />}
+              color="#C084FC"
+            />
           </section>
 
-          {/* Recent bookings */}
-          <section className="mt-10 grid md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 rounded-2xl bg-white/5 border border-white/10 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold">Recent Bookings</h3>
-                <button className="px-4 py-2 rounded-lg bg-white/6 hover:bg-white/10 transition">
-                  View all
-                </button>
-              </div>
+          {/* Recent Bookings */}
+          <section className="mt-10 bg-white/5 border border-white/10 p-6 rounded-2xl">
+            <h3 className="text-xl font-semibold mb-4">Recent Bookings</h3>
 
+            {recentBookings.length === 0 ? (
+              <p className="text-gray-400">No bookings available</p>
+            ) : (
               <table className="w-full text-left">
                 <thead>
-                  <tr className="text-sm text-gray-400 border-b border-white/6">
-                    <th className="py-3">Booking ID</th>
-                    <th className="py-3">User</th>
-                    <th className="py-3">Tour</th>
-                    <th className="py-3">Date</th>
-                    <th className="py-3">Amount</th>
-                    <th className="py-3">Status</th>
+                  <tr className="text-sm text-gray-400 border-b border-white/10">
+                    <th className="py-2">User</th>
+                    <th className="py-2">Tour</th>
+                    <th className="py-2">Amount</th>
+                    <th className="py-2">Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {recentBookings.map((r, i) => (
-                    <tr
-                      key={r.id}
-                      className={`border-b border-white/6 ${
-                        i % 2 === 0 ? "bg-white/2" : ""
-                      }`}
-                    >
-                      <td className="py-4">{r.id}</td>
-                      <td className="py-4">{r.user}</td>
-                      <td className="py-4">{r.tour}</td>
-                      <td className="py-4">{r.date}</td>
-                      <td className="py-4">
-                        ₹{r.amount.toLocaleString()}
-                      </td>
-                      <td className="py-4">
-                        <span
-                          className={`px-3 py-1 rounded-full text-sm ${
-                            r.status === "Confirmed"
-                              ? "bg-green-600/20 text-green-300"
-                              : "bg-yellow-600/20 text-yellow-300"
-                          }`}
-                        >
-                          {r.status}
-                        </span>
-                      </td>
+                  {recentBookings.map((b, i) => (
+                    <tr key={i} className="border-b border-white/10">
+                      <td className="py-3">{b.userId?.name || "User"}</td>
+                      <td className="py-3">{b.tourId?.title || "Tour"}</td>
+                      <td className="py-3">₹{b.amount}</td>
+                      <td className="py-3">{b.createdAt?.split("T")[0]}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-
-            <aside className="rounded-2xl bg-white/5 border border-white/10 p-6">
-              <h4 className="font-semibold text-lg">Quick Insights</h4>
-              <ul className="mt-4 space-y-3 text-gray-300">
-                <li>
-                  <strong>Top country:</strong> Switzerland
-                </li>
-                <li>
-                  <strong>Busiest month:</strong> December
-                </li>
-                <li>
-                  <strong>Avg. booking:</strong> ₹37,500
-                </li>
-              </ul>
-
-              <div className="mt-6">
-                <button className="w-full py-3 rounded-lg bg-gradient-to-r from-[#00F2FE] to-[#7C4CFF] text-black font-bold">
-                  Export CSV
-                </button>
-              </div>
-            </aside>
+            )}
           </section>
         </main>
+      </div>
+    </div>
+  );
+}
+
+// Stat card component
+function StatCard({ label, value, icon, color }) {
+  return (
+    <div className="p-6 rounded-2xl bg-[#021027]/50 border border-white/10 shadow-lg">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-gray-300 text-sm">{label}</p>
+          <h2 className="text-3xl font-extrabold" style={{ color }}>
+            {value}
+          </h2>
+        </div>
+        <div className="text-2xl" style={{ color }}>
+          {icon}
+        </div>
       </div>
     </div>
   );

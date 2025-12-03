@@ -2,59 +2,47 @@
 import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import axios from "axios";
+import { BASE_URL } from "../../config";
 
 export default function ViewBookings() {
   const [filter, setFilter] = useState("All");
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     AOS.init({ duration: 900, once: true });
-
-    // Dummy bookings (replace with API later)
-    setBookings([
-      {
-        id: "BKG-1001",
-        user: "Anita Sharma",
-        tour: "Swiss Alps Escape",
-        date: "2025-12-20",
-        travelers: 2,
-        amount: 45000,
-        status: "Confirmed",
-      },
-      {
-        id: "BKG-1002",
-        user: "Rohan Mehta",
-        tour: "Dubai Desert Safari",
-        date: "2025-11-05",
-        travelers: 4,
-        amount: 78000,
-        status: "Pending",
-      },
-      {
-        id: "BKG-1003",
-        user: "Priya Singh",
-        tour: "Bali Adventure",
-        date: "2025-10-14",
-        travelers: 1,
-        amount: 22000,
-        status: "Cancelled",
-      },
-      {
-        id: "BKG-1004",
-        user: "Karan Patel",
-        tour: "Manali Snow Tour",
-        date: "2025-12-01",
-        travelers: 3,
-        amount: 33000,
-        status: "Confirmed",
-      },
-    ]);
+    loadBookings();
   }, []);
+
+  const loadBookings = async () => {
+    try {
+      setLoading(true);
+
+      const res = await axios.get(`${BASE_URL}/admin/all-bookings`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      setBookings(res.data.bookings || []);
+    } catch (err) {
+      console.error("Booking load error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredBookings =
     filter === "All"
       ? bookings
       : bookings.filter((b) => b.status === filter);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#030617] text-white flex items-center justify-center">
+        Loading bookings...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#030617] text-white p-10">
@@ -67,10 +55,7 @@ export default function ViewBookings() {
       </h1>
 
       {/* Filter Buttons */}
-      <div
-        data-aos="fade-up"
-        className="flex gap-3 mb-6 flex-wrap"
-      >
+      <div data-aos="fade-up" className="flex gap-3 mb-6 flex-wrap">
         {["All", "Confirmed", "Pending", "Cancelled"].map((item) => (
           <button
             key={item}
@@ -107,20 +92,23 @@ export default function ViewBookings() {
           <tbody>
             {filteredBookings.map((b, index) => (
               <tr
-                key={b.id}
+                key={b._id}
                 className={`border-b border-white/10 ${
                   index % 2 === 0 ? "bg-white/5" : ""
                 }`}
               >
-                <td className="p-4">{b.id}</td>
-                <td className="p-4">{b.user}</td>
-                <td className="p-4">{b.tour}</td>
-                <td className="p-4">{b.date}</td>
-                <td className="p-4">{b.travelers}</td>
+                <td className="p-4">{b._id}</td>
+                <td className="p-4">{b.userId?.name || "Unknown User"}</td>
+                <td className="p-4">{b.tourId?.title || "Unknown Tour"}</td>
+                <td className="p-4">
+                  {b.createdAt ? b.createdAt.split("T")[0] : "--"}
+                </td>
+                <td className="p-4">{b.travelers || 1}</td>
                 <td className="p-4 text-blue-300">
-                  ₹{b.amount.toLocaleString()}
+                  ₹{(b.amount || 0).toLocaleString()}
                 </td>
 
+                {/* Status */}
                 <td className="p-4">
                   <span
                     className={`px-3 py-1 rounded-full text-sm ${

@@ -150,23 +150,18 @@ export default function AdminLogin() {
 
   const handleAdminLogin = async () => {
   try {
-    const res = await fetch("http://localhost:5000/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+    const res = await axios.post("http://localhost:5000/api/admin/login", form);
 
-    const data = await res.json();
-    if (!res.ok) return alert(data.message);
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("role", res.data.role);
 
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("role", "admin");
+    navigate("/admin/dashboard");
 
-    window.location.href = "/admin/dashboard";
   } catch (err) {
-    alert("Login failed");
+    alert(err.response?.data?.message || "Login failed");
   }
 };
+
 
 
   return (

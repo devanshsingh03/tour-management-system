@@ -1,101 +1,82 @@
+// src/pages/user/MyBookings.jsx
 import React, { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import axios from "axios";
-
+import { BASE_URL } from "../../config";
 
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-  AOS.init({ duration: 900, once: true });
-
-  const fetchBookings = async () => {
+  const loadBookings = async () => {
     try {
-      const token = localStorage.getItem("token");
-
-      // IMPORTANT: Send token correctly
-      const res = await axios.get(
-        "http://localhost:5000/api/bookings/my-bookings",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setBookings(res.data);
+      setLoading(true);
+      const res = await axios.get(`${BASE_URL}/bookings/my-bookings`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      setBookings(res.data.bookings || []);
     } catch (err) {
-      console.log("API Error:", err.response?.data || err);
+      console.error("Failed to fetch bookings:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  fetchBookings();
-}, []);
+  useEffect(() => {
+    loadBookings();
+  }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#010414] text-white flex items-center justify-center">
+        Loading your bookings...
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-[#010414] text-white px-6 py-16">
-      <div className="max-w-6xl mx-auto">
-        <h1
-          data-aos="fade-up"
-          className="text-4xl font-extrabold text-center mb-10"
-        >
-          My <span className="text-blue-400">Bookings</span>
-        </h1>
+    <div className="min-h-screen bg-[#010414] text-white p-10">
+      <h1 className="text-3xl font-bold mb-6">My Bookings</h1>
 
-        {/* Booking Cards */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {bookings.map((b, index) => (
+      {bookings.length === 0 ? (
+        <p className="text-gray-400">You have no bookings yet.</p>
+      ) : (
+        <div className="space-y-6">
+          {bookings.map((b) => (
             <div
-              key={index}
-              data-aos="fade-up"
-              data-aos-delay={index * 150}
-              className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl"
+              key={b._id}
+              className="bg-white/5 p-6 rounded-xl border border-white/10"
             >
-              <img
-                src={b.image}
-                alt={b.tourName}
-                className="w-full h-52 object-cover"
-              />
+              <h2 className="text-xl font-bold">
+                {b.tour?.title || "Tour"}
+              </h2>
 
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-blue-300">
-                  {b.tourName}
-                </h2>
+              <p className="text-gray-300 mt-2">
+                Price: ₹{b.amount} | Travelers: {b.travelers || 1}
+              </p>
 
-                <p className="text-gray-300 mt-2">
-                  <strong>Date:</strong> {b.date}
-                </p>
-                <p className="text-gray-300">
-                  <strong>Travelers:</strong> {b.travelers}
-                </p>
-                <p className="text-gray-300">
-                  <strong>Price:</strong> ₹{b.price}
-                </p>
+              <p className="text-gray-400 mt-1">
+                Booking Date:{" "}
+                {b.createdAt ? b.createdAt.split("T")[0] : "—"}
+              </p>
 
-                <div className="mt-4">
-                  <span
-                    className={`px-4 py-1 text-sm rounded-full ${
-                      b.status === "Confirmed"
-                        ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                        : "bg-yellow-500/20 text-yellow-300 border border-yellow-500/30"
-                    }`}
-                  >
-                    {b.status}
-                  </span>
-                </div>
-              </div>
+              <p className="mt-2">
+                Status:{" "}
+                <span
+                  className={`px-3 py-1 rounded-full text-sm ${
+                    b.status === "Confirmed"
+                      ? "bg-green-600/20 text-green-300"
+                      : b.status === "Cancelled"
+                      ? "bg-red-600/20 text-red-300"
+                      : "bg-yellow-600/20 text-yellow-300"
+                  }`}
+                >
+                  {b.status}
+                </span>
+              </p>
             </div>
           ))}
         </div>
-
-        {bookings.length === 0 && (
-          <p className="text-center text-gray-400 mt-6 text-lg">
-            You have no bookings yet.
-          </p>
-        )}
-      </div>
+      )}
     </div>
   );
 }
