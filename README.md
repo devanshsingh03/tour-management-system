@@ -218,8 +218,6 @@ Thanks to the amazing team behind this project:
 | **Sayma**         | Contributor          |
 | **Saksham**       | Contributor          |
 
-> Want to add GitHub profile links? Just tell me and I’ll format them beautifully.
-
 ---
 
 # 👨‍💻 **Author**
