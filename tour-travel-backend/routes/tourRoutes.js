@@ -30,3 +30,4 @@ router.put("/:id", adminAuth, updateTour);
 router.delete("/:id", adminAuth, deleteTour);
 
 export default router;
+

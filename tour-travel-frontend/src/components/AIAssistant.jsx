@@ -9,7 +9,7 @@ export default function AIAssistant() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fake AI reply
+  
   const sendMessage = () => {
     if (!input.trim()) return;
 
@@ -28,7 +28,7 @@ export default function AIAssistant() {
 
   return (
     <>
-      {/* Floating AI Button */}
+     
       {!open && (
         <div
           onClick={() => setOpen(true)}
@@ -45,7 +45,7 @@ export default function AIAssistant() {
         </div>
       )}
 
-      {/* Chat Window */}
+      
       {open && (
         <div
           className="fixed z-[9999] bottom-8 right-8 w-[380px] h-[560px]
@@ -53,7 +53,7 @@ export default function AIAssistant() {
           border border-white/30 rounded-2xl shadow-2xl
           flex flex-col animate-fadeIn overflow-hidden"
         >
-          {/* Top Bar */}
+          
           <div className="p-4 flex justify-between items-center bg-white/10 border-b border-white/20">
             <h2 className="text-black font-semibold text-lg">TourX Assistant</h2>
             <FiX
@@ -62,7 +62,6 @@ export default function AIAssistant() {
             />
           </div>
 
-          {/* Avatar */}
           <div className="flex justify-center py-4">
             <img
               src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png"

@@ -79,7 +79,7 @@ export default function AdminProtected({ children }) {
   const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
-    // Delay to allow React to load localStorage properly
+    
     setTimeout(() => {
       const token = localStorage.getItem("token");
       const role = localStorage.getItem("role");

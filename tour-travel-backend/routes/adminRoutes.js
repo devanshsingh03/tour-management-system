@@ -275,7 +275,7 @@ router.get("/stats", adminAuth, async (req, res) => {
 router.get("/recent-bookings", adminAuth, async (req, res) => {
   try {
     const recent = await Booking.find()
-      .populate("user", "name")     // fixed: correct field name
+      .populate("user", "name email")     // fixed: correct field name
       .populate("tour", "title")    // fixed: correct field name
       .sort({ createdAt: -1 })
       .limit(5);

@@ -191,8 +191,8 @@ export default function AdminDashboard() {
                 <tbody>
                   {recentBookings.map((b, i) => (
                     <tr key={i} className="border-b border-white/10">
-                      <td className="py-3">{b.userId?.name || "User"}</td>
-                      <td className="py-3">{b.tourId?.title || "Tour"}</td>
+                      <td className="py-3">{b.user?.name || "User"}</td>
+                      <td className="py-3">{b.tour?.title || "Tour"}</td>
                       <td className="py-3">₹{b.amount}</td>
                       <td className="py-3">{b.createdAt?.split("T")[0]}</td>
                     </tr>

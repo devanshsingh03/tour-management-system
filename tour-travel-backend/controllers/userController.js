@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// ---------------- USER SIGNUP ----------------
+//  USER SIGNUP 
 export const userSignup = async (req, res) => {
   try {
     const { name, email, password, confirmPassword, phone } = req.body;
@@ -38,7 +38,7 @@ export const userSignup = async (req, res) => {
   }
 };
 
-// ---------------- USER LOGIN ----------------
+//  USER LOGIN 
 export const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;

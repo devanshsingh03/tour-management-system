@@ -1,4 +1,4 @@
-// controllers/adminController.js
+
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
@@ -50,7 +50,7 @@ export const adminLogin = async (req, res) => {
     if (!match) return res.status(400).json({ message: "Invalid password" });
 
     const token = jwt.sign(
-      { id: admin._id, role: "admin" },
+      { id: admin._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );

@@ -1,10 +1,10 @@
 // backend/controllers/tourController.js
 import Tour from "../models/Tour.js";
 
-// =========================
+
 // POST /api/tours/add
 // (admin only - route uses adminAuth)
-// =========================
+
 export const createTour = async (req, res) => {
   try {
     const {
@@ -44,10 +44,9 @@ export const createTour = async (req, res) => {
   }
 };
 
-// =========================
 // GET /api/tours/all  (admin list)
 // GET /api/tours       (public list)
-// =========================
+
 export const getAllTours = async (req, res) => {
   try {
     const tours = await Tour.find().sort({ createdAt: -1 });
@@ -58,9 +57,8 @@ export const getAllTours = async (req, res) => {
   }
 };
 
-// =========================
 // GET /api/tours/:id
-// =========================
+
 export const getTourById = async (req, res) => {
   try {
     const tour = await Tour.findById(req.params.id);
@@ -74,9 +72,9 @@ export const getTourById = async (req, res) => {
   }
 };
 
-// =========================
+
 // PUT /api/tours/:id  (admin)
-// =========================
+
 export const updateTour = async (req, res) => {
   try {
     const {
@@ -118,9 +116,9 @@ export const updateTour = async (req, res) => {
   }
 };
 
-// =========================
+
 // DELETE /api/tours/:id (admin)
-// =========================
+
 export const deleteTour = async (req, res) => {
   try {
     const tour = await Tour.findByIdAndDelete(req.params.id);

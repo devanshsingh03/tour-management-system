@@ -1,5 +1,4 @@
-// // models/Booking.js
-// import mongoose from "mongoose";
+ import mongoose from "mongoose";
 
 // const bookingSchema = new mongoose.Schema(
 //   {
@@ -12,21 +11,6 @@
 //     tour: {
 //       type: mongoose.Schema.Types.ObjectId,
 //       ref: "Tour",
-//     },
-
-//     tourName: {
-//       type: String,
-//       required: true,
-//       trim: true,
-//     },
-
-//     image: {
-//       type: String,
-//       trim: true,
-//     },
-
-//     date: {
-//       type: Date,
 //       required: true,
 //     },
 
@@ -34,9 +18,15 @@
 //       type: Number,
 //       required: true,
 //       min: 1,
+//       default: 1,
 //     },
 
-//     price: {
+//     dateOfTravel: {
+//       type: Date,
+//       required: true,
+//     },
+
+//     amount: {
 //       type: Number,
 //       required: true,
 //       min: 0,
@@ -45,42 +35,25 @@
 //     status: {
 //       type: String,
 //       enum: ["Pending", "Confirmed", "Cancelled"],
-//       default: "Confirmed",
+//       default: "Pending",
 //     },
 //   },
 //   { timestamps: true }
 // );
 
-// const Booking = mongoose.model("Booking", bookingSchema);
-// export default Booking;
-
-
-import mongoose from "mongoose";
+ 
 
 const bookingSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    tour: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Tour",
-      required: true,
-    },
-    travelers: {
-      type: Number,
-      default: 1,
-    },
-    amount: {
-      type: Number,
-      default: 0,
-    },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    tour: { type: mongoose.Schema.Types.ObjectId, ref: "Tour", required: true },
+    travelers: { type: Number, required: true },
+    dateOfTravel: { type: Date, required: true },
+    amount: { type: Number, required: true },
     status: {
       type: String,
-      enum: ["Pending", "Confirmed", "Cancelled"],
-      default: "Pending",
+      enum: ["pending", "confirmed", "cancelled"],
+      default: "pending",
     },
   },
   { timestamps: true }

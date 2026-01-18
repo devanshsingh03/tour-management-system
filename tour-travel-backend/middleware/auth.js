@@ -1,5 +1,6 @@
 // middleware/auth.js
 import jwt from "jsonwebtoken";
+import Admin from "../models/Admin.js";
 
   const auth = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -19,10 +20,19 @@ import jwt from "jsonwebtoken";
   }
 };
 
- const isAdmin = (req, res, next) => {
-  if (req.user.role !== "admin")
-    return res.status(403).json({ message: "Admin access required" });
+export const isAdmin = async (req, res, next) => {
+  try {
+    const admin = await Admin.findById(req.user.id);
 
-  next();
+    if (!admin) {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+
+    next();
+  } catch (error) {
+    console.error("Admin check failed:", error);
+    return res.status(500).json({ message: "Admin verification failed" });
+  }
 };
+
 export default auth;

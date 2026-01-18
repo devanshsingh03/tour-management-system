@@ -12,6 +12,12 @@ import userRoutes from "./routes/userRoutes.js";
 dotenv.config();
 
 const app = express();
+if (!process.env.MONGO_URI) {
+  throw new Error("MONGO_URI is missing");
+}
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET is missing");
+}
 
 // Middlewares
 app.use(cors({
@@ -25,6 +31,14 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/tours", tourRoutes);
 app.use("/api/user" , userRoutes);
+
+//Error Handler 
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "Server Error"
+  });
+});
 
 //router.post("/add")
 // Test route

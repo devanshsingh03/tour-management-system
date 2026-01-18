@@ -32,6 +32,13 @@ export default function MyBookings() {
       </div>
     );
   }
+  const statusStyles = {
+  confirmed: "bg-green-600/20 text-green-400",
+  pending: "bg-yellow-600/20 text-yellow-400",
+  cancelled: "bg-red-600/20 text-red-400",
+};
+
+
 
   return (
     <div className="min-h-screen bg-[#010414] text-white p-10">
@@ -42,7 +49,10 @@ export default function MyBookings() {
       ) : (
         <div className="space-y-6">
           {bookings.map((b) => (
-            <div
+           
+           <div
+            
+
               key={b._id}
               className="bg-white/5 p-6 rounded-xl border border-white/10"
             >
@@ -62,16 +72,13 @@ export default function MyBookings() {
               <p className="mt-2">
                 Status:{" "}
                 <span
-                  className={`px-3 py-1 rounded-full text-sm ${
-                    b.status === "Confirmed"
-                      ? "bg-green-600/20 text-green-300"
-                      : b.status === "Cancelled"
-                      ? "bg-red-600/20 text-red-300"
-                      : "bg-yellow-600/20 text-yellow-300"
-                  }`}
-                >
-                  {b.status}
-                </span>
+  className={`px-3 py-1 rounded-full text-sm font-medium ${
+    statusStyles[b.status?.toLowerCase()] || "bg-gray-600/20 text-gray-400"
+  }`}
+>
+  {b.status.charAt(0).toUpperCase() + b.status.slice(1)}
+</span>
+
               </p>
             </div>
           ))}

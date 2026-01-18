@@ -15,11 +15,37 @@ export default function ViewBookings() {
     loadBookings();
   }, []);
 
+  const handleStatusChange = async (bookingId, newStatus) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.put(
+      `${BASE_URL}/bookings/${bookingId}/status`,
+      { status: newStatus },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // Update UI immediately
+    setBookings((prev) =>
+      prev.map((b) =>
+        b._id === bookingId ? { ...b, status: newStatus } : b
+      )
+    );
+  } catch (err) {
+    alert("Failed to update booking status");
+  }
+};
+
+
   const loadBookings = async () => {
     try {
       setLoading(true);
 
-      const res = await axios.get(`${BASE_URL}/admin/all-bookings`, {
+      const res = await axios.get(`${BASE_URL}/bookings/all`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
@@ -79,7 +105,6 @@ export default function ViewBookings() {
         <table className="w-full text-left">
           <thead>
             <tr className="border-b border-white/10 text-gray-300 text-sm">
-              <th className="p-4">Booking ID</th>
               <th className="p-4">User</th>
               <th className="p-4">Tour</th>
               <th className="p-4">Date</th>
@@ -97,9 +122,10 @@ export default function ViewBookings() {
                   index % 2 === 0 ? "bg-white/5" : ""
                 }`}
               >
-                <td className="p-4">{b._id}</td>
-                <td className="p-4">{b.userId?.name || "Unknown User"}</td>
-                <td className="p-4">{b.tourId?.title || "Unknown Tour"}</td>
+                
+                <td className="p-4">{b.user?.name || "Unknown User"}</td>
+                <td className="p-4">{b.tour?.title || "Unknown Tour"}</td>
+
                 <td className="p-4">
                   {b.createdAt ? b.createdAt.split("T")[0] : "--"}
                 </td>
@@ -109,19 +135,43 @@ export default function ViewBookings() {
                 </td>
 
                 {/* Status */}
-                <td className="p-4">
+                {/* <td className="p-4">
                   <span
                     className={`px-3 py-1 rounded-full text-sm ${
-                      b.status === "Confirmed"
+                      b.status === "confirmed"
                         ? "bg-green-600/20 text-green-300"
-                        : b.status === "Pending"
+                        : b.status === "pending"
                         ? "bg-yellow-600/20 text-yellow-300"
                         : "bg-red-600/20 text-red-300"
                     }`}
                   >
-                    {b.status}
+                    {b.status.charAt(0).toUpperCase() + b.status.slice(1)}
                   </span>
-                </td>
+                </td> */}
+                <td className="p-4">
+  <select
+    value={b.status}
+    onChange={(e) => handleStatusChange(b._id, e.target.value)}
+    className={`px-3 py-1 rounded-full text-sm bg-transparent outline-none cursor-pointer ${
+      b.status === "confirmed"
+        ? "bg-green-600/20 text-green-300"
+        : b.status === "pending"
+        ? "bg-yellow-600/20 text-yellow-300"
+        : "bg-red-600/20 text-red-300"
+    }`}
+  >
+    <option value="pending" className="text-black">
+      Pending
+    </option>
+    <option value="confirmed" className="text-black">
+      Confirmed
+    </option>
+    <option value="cancelled" className="text-black">
+      Cancelled
+    </option>
+  </select>
+</td>
+
               </tr>
             ))}
           </tbody>
