@@ -439,7 +439,6 @@ import { useNavigate } from "react-router-dom";
 
 // Imported Sections (kept main ones; inline sections used for Trending & Categories)
 import ToursCarousel from "../components/ToursCarousel";
-import AIAssistant from "../components/AIAssistant";
 import PricingPlans from "../components/PricingPlans";
 import CyberTestimonials from "../components/CyberTestimonials";
 import AnimatedStats from "../components/AnimatedStats";
@@ -816,7 +815,6 @@ export default function Home() {
         </div>
       </section>
 
-      <AIAssistant />
     </div>
   );
 }

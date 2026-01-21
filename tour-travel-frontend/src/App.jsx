@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import VoiceAssistant from "./components/VoiceAssistant";
+import AIAssistant from "./components/AIAssistant";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -52,14 +52,15 @@ import "aos/dist/aos.css";
 function LayoutWrapper({ children }) {
   const location = useLocation();
 
-  // hide navbar on admin pages
   const hideNavbar = location.pathname.startsWith("/admin");
+  
+  const hideVoiceAssistant = location.pathname === "/" || location.pathname.startsWith("/admin");
 
   return (
     <>
       {!hideNavbar && <Navbar />}
       {children}
-      {!hideNavbar && <VoiceAssistant />}
+      {!hideNavbar && <AIAssistant />}
     </>
   );
 }
