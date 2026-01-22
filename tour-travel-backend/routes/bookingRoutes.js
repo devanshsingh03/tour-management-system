@@ -1,5 +1,6 @@
 import express from "express";
 import auth, { isAdmin } from "../middleware/auth.js";
+import { getUserTravelStats } from "../controllers/bookingController.js";
 import {
   createBooking,
   getMyBookings,
@@ -20,5 +21,8 @@ router.get("/all", auth, isAdmin, getAllBookings);
 
 // ADMIN UPDATE STATUS
 router.put("/:id/status", auth, isAdmin, updateBookingStatus);
+
+
+router.get("/stats", auth, getUserTravelStats);
 
 export default router;

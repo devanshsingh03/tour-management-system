@@ -1,15 +1,566 @@
-// src/App.jsx
+// // // src/App.jsx
+// // import React, { useEffect } from "react";
+// // import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+
+// // import Navbar from "./components/Navbar";
+// // import VoiceAssistant from "./components/VoiceAssistant";
+
+// // import Home from "./pages/Home";
+// // import About from "./pages/About";
+// // import Contact from "./pages/Contact";
+// // import Blog from "./pages/Blog";
+
+// // import Tours from "./pages/Tours";
+// // import SingleTour from "./pages/SingleTour";
+// // import Booking from "./pages/Booking";
+// // import Payment from "./pages/Payment";
+// // import PaymentSuccess from "./pages/PaymentSuccess";
+// // import PaymentFailed from "./pages/PaymentFailed";
+
+// // import Login from "./pages/Login";
+// // import Signup from "./pages/Signup";
+
+// // import UserDashboard from "./pages/user/UserDashboard";
+// // import MyBookings from "./pages/user/MyBookings";
+
+// // // Admin
+// // import AdminLogin from "./pages/admin/AdminLogin";
+// // import AdminSignup from "./pages/admin/AdminSignup";
+// // import AdminDashboard from "./pages/admin/AdminDashboard";
+// // import AddTour from "./pages/admin/AddTour";
+// // import ManageTours from "./pages/admin/ManageTours";
+// // import EditTour from "./pages/admin/EditTour";
+// // import ViewBookings from "./pages/admin/ViewBookings";
+
+// // import Experience from "./pages/Experience";
+// // import Destination from "./pages/Destination";
+// // import Category from "./pages/Category";
+// // import HolographicJourney from "./pages/HolographicJourney";
+// // import HologramDemo from "./pages/HologramDemo";
+// // import CategoryTours from "./pages/CategoryTours";
+
+// // import BlogDetails from "./pages/BlogDetails";
+// // import Bali from "./pages/tours/Bali";
+// // import Goa from "./pages/tours/Goa";
+
+// // import AdminProtected from "./components/AdminProtected";
+
+// // // AOS Animation
+// // import AOS from "aos";
+// // import "aos/dist/aos.css";
+
+// // function LayoutWrapper({ children }) {
+// //   const location = useLocation();
+
+// //   // hide navbar on admin pages
+// //   const hideNavbar = location.pathname.startsWith("/admin");
+
+// //   return (
+// //     <>
+// //       {!hideNavbar && <Navbar />}
+// //       {children}
+// //       {!hideNavbar && <VoiceAssistant />}
+// //     </>
+// //   );
+// // }
+
+// // function App() {
+// //   useEffect(() => {
+// //     AOS.init({ duration: 1200, once: true });
+// //   }, []);
+
+// //   return (
+// //     <BrowserRouter>
+// //       <LayoutWrapper>
+// //         <Routes>
+// //           {/* Home */}
+// //           <Route path="/" element={<Home />} />
+
+// //           {/* Interactive Pages */}
+// //           <Route path="/experience/:slug" element={<Experience />} />
+// //           <Route path="/destination/:slug" element={<Destination />} />
+// //           <Route path="/category/:slug" element={<Category />} />
+// //           <Route path="/category/:slug/tours" element={<CategoryTours />} />
+// //           <Route path="/holographic-journey" element={<HolographicJourney />} />
+// //           <Route path="/hologram-demo" element={<HologramDemo />} />
+
+// //           {/* Basic Pages */}
+// //           <Route path="/about" element={<About />} />
+// //           <Route path="/contact" element={<Contact />} />
+// //           <Route path="/blog" element={<Blog />} />
+// //           <Route path="/blog/:id" element={<BlogDetails />} />
+
+// //           {/* Tours */}
+// //           <Route path="/tours" element={<Tours />} />
+// //           <Route path="/tour/:id" element={<SingleTour />} />
+// //           <Route path="/booking/:id" element={<Booking />} />
+// //           <Route path="/payment/:id" element={<Payment />} />
+// //           <Route path="/payment-success" element={<PaymentSuccess />} />
+// //           <Route path="/payment-failed" element={<PaymentFailed />} />
+
+// //           {/* User Auth */}
+// //           <Route path="/login" element={<Login />} />
+// //           <Route path="/signup" element={<Signup />} />
+
+// //           {/* User Dashboard */}
+// //           <Route path="/dashboard" element={<UserDashboard />} />
+// //           <Route path="/my-bookings" element={<MyBookings />} />
+
+// //           {/* Admin Auth */}
+// //           <Route path="/admin/login" element={<AdminLogin />} />
+// //           <Route path="/admin/signup" element={<AdminSignup />} />
+
+// //           {/* Admin Protected Pages */}
+// //           <Route
+// //             path="/admin/dashboard"
+// //             element={
+// //               <AdminProtected>
+// //                 <AdminDashboard />
+// //               </AdminProtected>
+// //             }
+// //           />
+
+// //           <Route
+// //             path="/admin/add-tour"
+// //             element={
+// //               <AdminProtected>
+// //                 <AddTour />
+// //               </AdminProtected>
+// //             }
+// //           />
+
+// //           <Route
+// //             path="/admin/manage-tours"
+// //             element={
+// //               <AdminProtected>
+// //                 <ManageTours />
+// //               </AdminProtected>
+// //             }
+// //           />
+
+// //           <Route
+// //             path="/admin/edit-tour/:id"
+// //             element={
+// //               <AdminProtected>
+// //                 <EditTour />
+// //               </AdminProtected>
+// //             }
+// //           />
+
+// //           <Route
+// //             path="/admin/view-bookings"
+// //             element={
+// //               <AdminProtected>
+// //                 <ViewBookings />
+// //               </AdminProtected>
+// //             }
+// //           />
+
+// //           {/* Tourism Microsites */}
+// //           <Route path="/hologram-bali" element={<Bali />} />
+// //           <Route path="/hologram-goa" element={<Goa />} />
+
+// //         </Routes>
+// //       </LayoutWrapper>
+// //     </BrowserRouter>
+// //   );
+// // }
+
+// // export default App;
+
+// // import React from "react";
+
+// // import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// // // Components
+// // import Navbar from "./components/Navbar";
+// // import VoiceAssistant from "./components/VoiceAssistant";
+
+// // // Main Pages
+// // import Home from "./pages/Home";
+// // import About from "./pages/About";
+// // import Contact from "./pages/Contact";
+// // import Blog from "./pages/Blog";
+
+// // // Tours
+// // import Tours from "./pages/Tours";
+// // import SingleTour from "./pages/SingleTour";
+// // import Booking from "./pages/Booking";
+// // import Payment from "./pages/Payment";
+// // import PaymentSuccess from "./pages/PaymentSuccess";
+// // import PaymentFailed from "./pages/PaymentFailed";
+
+// // // Auth
+// // import Login from "./pages/Login";
+// // import Signup from "./pages/Signup";
+
+// // // Admin Auth
+// // import AdminLogin from "./pages/admin/AdminLogin";
+// // import AdminSignup from "./pages/admin/AdminSignup";
+
+// // // User Pages
+// // import UserDashboard from "./pages/user/UserDashboard";
+// // import MyBookings from "./pages/user/MyBookings";
+
+// // // Admin Pages
+// // import AdminDashboard from "./pages/admin/AdminDashboard";
+// // import AddTour from "./pages/admin/AddTour";
+// // import ManageTours from "./pages/admin/ManageTours";
+// // import EditTour from "./pages/admin/EditTour";
+// // import ViewBookings from "./pages/admin/ViewBookings";
+
+// // // New Interactive Experience Pages
+// // import Experience from "./pages/Experience";
+// // import Destination from "./pages/Destination";
+// // import Category from "./pages/Category";
+// // import HolographicJourney from "./pages/HolographicJourney";
+
+
+// // import HologramDemo from "./pages/HologramDemo";
+// // import CategoryTours from "./pages/CategoryTours";
+
+// // import BlogDetails from "./pages/BlogDetails";
+
+// // import Bali from "./pages/tours/Bali";
+// // import Goa from "./pages/tours/Goa";
+// // import MountainTrekking7d from "./data/tours/auroraTrailsExpedition";
+
+// // import AdminProtected from "./components/AdminProtected";
+
+// // // import Paris from "./pages/tours/Paris";
+// // // AOS Animation
+// // import AOS from "aos";
+// // import "aos/dist/aos.css";
+
+// // function App() {
+// //   React.useEffect(() => {
+// //     AOS.init({ duration: 1200, once: true });
+// //   }, []);
+
+// //   return (
+// //     <BrowserRouter>
+// //       <Navbar />
+
+// //       <Routes>
+// //         {/* Home */}
+// //         <Route path="/" element={<Home />} />
+
+// //         {/* Interactive new pages */}
+// //         <Route path="/experience/:slug" element={<Experience />} />
+// //         <Route path="/destination/:slug" element={<Destination />} />
+// //         <Route path="/category/:slug" element={<Category />} />
+// //         <Route path="/holographic-journey" element={<HolographicJourney />} />
+
+// // <Route path="/hologram-demo" element={<HologramDemo />} />
+// // <Route path="/category/:slug/tours" element={<CategoryTours />} />
+
+// //         {/* Basic Pages */}
+// //         <Route path="/about" element={<About />} />
+// //         <Route path="/contact" element={<Contact />} />
+// //         <Route path="/blog" element={<Blog />} />
+
+
+
+// //         {/* Tours */}
+// //         <Route path="/tours" element={<Tours />} />
+// //         <Route path="/tour/:id" element={<SingleTour />} />
+// //         <Route path="/booking/:id" element={<Booking />} />
+// //         <Route path="/payment/:id" element={<Payment />} />
+// //         <Route path="/payment-success" element={<PaymentSuccess />} />
+// //         <Route path="/payment-failed" element={<PaymentFailed />} />
+
+// //         {/* User Auth */}
+// //         <Route path="/login" element={<Login />} />
+// //         <Route path="/signup" element={<Signup />} />
+
+// //         {/* User Dashboard */}
+// //         <Route path="/dashboard" element={<UserDashboard />} />
+// //         <Route path="/my-bookings" element={<MyBookings />} />
+
+// //         {/* Admin Auth */}
+// //         <Route path="/admin/login" element={<AdminLogin />} />
+// //         <Route path="/admin/signup" element={<AdminSignup />} />
+
+// //         {/* Admin Dashboard */}
+// //         <Route
+// //   path="/admin/dashboard"
+// //   element={
+// //     <AdminProtected>
+// //       <AdminDashboard />
+// //     </AdminProtected>
+// //   }
+// // />
+
+// // <Route
+// //   path="/admin/add-tour"
+// //   element={
+// //     <AdminProtected>
+// //       <AddTour />
+// //     </AdminProtected>
+// //   }
+// // />
+
+// // <Route
+// //   path="/admin/manage-tours"
+// //   element={
+// //     <AdminProtected>
+// //       <ManageTours />
+// //     </AdminProtected>
+// //   }
+// // />
+
+// // <Route
+// //   path="/admin/view-bookings"
+// //   element={
+// //     <AdminProtected>
+// //       <ViewBookings />
+// //     </AdminProtected>
+// //   }
+// // />
+
+// // <Route
+// //   path="/admin/edit-tour/:id"
+// //   element={
+// //     <AdminProtected>
+// //       <EditTour />
+// //     </AdminProtected>
+// //   }
+// // />
+
+// // <Route path="/blog/:id" element={<BlogDetails />} />
+   
+
+// //    <Route path="/hologram-bali" element={<Bali />} />
+// // <Route path="/hologram-goa" element={<Goa />} />
+// // {/* <Route path="/hologram-paris" element={<Paris />} /> */}
+// // <Route path="/mountain-trekking-7d" element={<MountainTrekking7d />} />
+// //       </Routes>
+
+// //       <VoiceAssistant />
+// //     </BrowserRouter>
+// //   );
+// // }
+
+// // export default App;
+
+
+// import React from "react";
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// // Components
+// import Navbar from "./components/Navbar";
+// import VoiceAssistant from "./components/VoiceAssistant";
+
+// // Main Pages
+// import Home from "./pages/Home";
+// import About from "./pages/About";
+// import Contact from "./pages/Contact";
+// import Blog from "./pages/Blog";
+
+// // Tours (existing – untouched)
+// import Tours from "./pages/Tours";
+// import SingleTour from "./pages/SingleTour";
+// import Booking from "./pages/Booking";
+// import Payment from "./pages/Payment";
+// import PaymentSuccess from "./pages/PaymentSuccess";
+// import PaymentFailed from "./pages/PaymentFailed";
+
+// // Auth
+// import Login from "./pages/Login";
+// import Signup from "./pages/Signup";
+
+// // Admin Auth
+// import AdminLogin from "./pages/admin/AdminLogin";
+// import AdminSignup from "./pages/admin/AdminSignup";
+
+// // User Pages
+// import UserDashboard from "./pages/user/UserDashboard";
+// import MyBookings from "./pages/user/MyBookings";
+
+// // Admin Pages
+// import AdminDashboard from "./pages/admin/AdminDashboard";
+// import AddTour from "./pages/admin/AddTour";
+// import ManageTours from "./pages/admin/ManageTours";
+// import EditTour from "./pages/admin/EditTour";
+// import ViewBookings from "./pages/admin/ViewBookings";
+
+// // New Interactive Experience Pages
+// import Experience from "./pages/Experience";
+// import Destination from "./pages/Destination";
+// import Category from "./pages/Category";
+// import HolographicJourney from "./pages/HolographicJourney";
+// import HologramDemo from "./pages/HologramDemo";
+// import CategoryTours from "./pages/CategoryTours";
+
+// import BlogDetails from "./pages/BlogDetails";
+// import Bali from "./pages/tours/Bali";
+// import Goa from "./pages/tours/Goa";
+
+// import AdminProtected from "./components/AdminProtected";
+
+// // 🔥 TOUR DATA (OBJECT, NOT COMPONENT)
+// import mountainTrekking7d from "./data/tours/mountainTrekking7d";
+
+// // AOS Animation
+// import AOS from "aos";
+// import "aos/dist/aos.css";
+
+// /* ================================
+//    🔥 WRAPPER COMPONENT (REQUIRED)
+//    ================================ */
+// const MountainTrekking7dPage = () => {
+//   const tour = mountainTrekking7d;
+
+//   return (
+//     <div style={{ padding: 24, maxWidth: 1100, margin: "0 auto" }}>
+//       <img
+//         src={tour.images[0]}
+//         alt={tour.title}
+//         style={{
+//           width: "100%",
+//           height: 380,
+//           objectFit: "cover",
+//           borderRadius: 12,
+//         }}
+//       />
+
+//       <h1 style={{ marginTop: 20 }}>{tour.title}</h1>
+//       <p>{tour.location}</p>
+//       <p>{tour.description}</p>
+//       <h3>₹{tour.price}</h3>
+
+//       <h4>Highlights</h4>
+//       <ul>
+//         {tour.highlights.map((item, i) => (
+//           <li key={i}>{item}</li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// function App() {
+//   React.useEffect(() => {
+//     AOS.init({ duration: 1200, once: true });
+//   }, []);
+
+//   return (
+//     <BrowserRouter>
+//       <Navbar />
+
+//       <Routes>
+//         {/* Home */}
+//         <Route path="/" element={<Home />} />
+
+//         {/* Interactive pages */}
+//         <Route path="/experience/:slug" element={<Experience />} />
+//         <Route path="/destination/:slug" element={<Destination />} />
+//         <Route path="/category/:slug" element={<Category />} />
+//         <Route path="/holographic-journey" element={<HolographicJourney />} />
+//         <Route path="/hologram-demo" element={<HologramDemo />} />
+//         <Route path="/category/:slug/tours" element={<CategoryTours />} />
+
+//         {/* Basic Pages */}
+//         <Route path="/about" element={<About />} />
+//         <Route path="/contact" element={<Contact />} />
+//         <Route path="/blog" element={<Blog />} />
+//         <Route path="/blog/:id" element={<BlogDetails />} />
+
+//         {/* Existing Tours (UNCHANGED) */}
+//         <Route path="/tours" element={<Tours />} />
+//         <Route path="/tour/:id" element={<SingleTour />} />
+//         <Route path="/booking/:id" element={<Booking />} />
+//         <Route path="/payment/:id" element={<Payment />} />
+//         <Route path="/payment-success" element={<PaymentSuccess />} />
+//         <Route path="/payment-failed" element={<PaymentFailed />} />
+
+//         {/* User Auth */}
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/signup" element={<Signup />} />
+
+//         {/* User */}
+//         <Route path="/dashboard" element={<UserDashboard />} />
+//         <Route path="/my-bookings" element={<MyBookings />} />
+
+//         {/* Admin Auth */}
+//         <Route path="/admin/login" element={<AdminLogin />} />
+//         <Route path="/admin/signup" element={<AdminSignup />} />
+
+//         {/* Admin Pages */}
+//         <Route
+//           path="/admin/dashboard"
+//           element={
+//             <AdminProtected>
+//               <AdminDashboard />
+//             </AdminProtected>
+//           }
+//         />
+//         <Route
+//           path="/admin/add-tour"
+//           element={
+//             <AdminProtected>
+//               <AddTour />
+//             </AdminProtected>
+//           }
+//         />
+//         <Route
+//           path="/admin/manage-tours"
+//           element={
+//             <AdminProtected>
+//               <ManageTours />
+//             </AdminProtected>
+//           }
+//         />
+//         <Route
+//           path="/admin/view-bookings"
+//           element={
+//             <AdminProtected>
+//               <ViewBookings />
+//             </AdminProtected>
+//           }
+//         />
+//         <Route
+//           path="/admin/edit-tour/:id"
+//           element={
+//             <AdminProtected>
+//               <EditTour />
+//             </AdminProtected>
+//           }
+//         />
+
+//         {/* Hologram */}
+//         <Route path="/hologram-bali" element={<Bali />} />
+//         <Route path="/hologram-goa" element={<Goa />} />
+
+//         {/* 🔥 INDEPENDENT TOUR ROUTE (SAFE & ISOLATED) */}
+//         <Route
+//           path="/mountain-trekking-7d"
+//           element={<MountainTrekking7dPage />}
+//         />
+//       </Routes>
+
+//       <VoiceAssistant />
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
+// Components
 import Navbar from "./components/Navbar";
 import VoiceAssistant from "./components/VoiceAssistant";
-
+import AIAssistant from "./components/AIAssistant";
+// Main Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 
+// Tours (existing – untouched)
 import Tours from "./pages/Tours";
 import SingleTour from "./pages/SingleTour";
 import Booking from "./pages/Booking";
@@ -17,49 +568,63 @@ import Payment from "./pages/Payment";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailed from "./pages/PaymentFailed";
 
+// Auth
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
+// User Pages
 import UserDashboard from "./pages/user/UserDashboard";
 import MyBookings from "./pages/user/MyBookings";
 
-// Admin
+// Admin Auth
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminSignup from "./pages/admin/AdminSignup";
+
+// Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AddTour from "./pages/admin/AddTour";
 import ManageTours from "./pages/admin/ManageTours";
 import EditTour from "./pages/admin/EditTour";
 import ViewBookings from "./pages/admin/ViewBookings";
 
+// Interactive Pages
 import Experience from "./pages/Experience";
 import Destination from "./pages/Destination";
 import Category from "./pages/Category";
+import CategoryTours from "./pages/CategoryTours";
 import HolographicJourney from "./pages/HolographicJourney";
 import HologramDemo from "./pages/HologramDemo";
-import CategoryTours from "./pages/CategoryTours";
 
+// Blog
 import BlogDetails from "./pages/BlogDetails";
+
+// Hologram Demos
 import Bali from "./pages/tours/Bali";
 import Goa from "./pages/tours/Goa";
 
+// 🔥 FIXED TOUR PAGE (UI PAGE, NOT DATA)
+// import MountainTrekking7D from "./pages/tours/MountainTrekking7D";
+import TourDetails from "./pages/tours/TourDetails";
+// Admin Guard
 import AdminProtected from "./components/AdminProtected";
 
-// AOS Animation
+// AOS
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 
 function LayoutWrapper({ children }) {
   const location = useLocation();
 
-  // hide navbar on admin pages
   const hideNavbar = location.pathname.startsWith("/admin");
+  
+  const hideVoiceAssistant = location.pathname === "/" || location.pathname.startsWith("/admin");
 
   return (
     <>
       {!hideNavbar && <Navbar />}
       {children}
-      {!hideNavbar && <VoiceAssistant />}
+      {!hideNavbar && <AIAssistant />}
     </>
   );
 }
@@ -71,97 +636,102 @@ function App() {
 
   return (
     <BrowserRouter>
-      <LayoutWrapper>
-        <Routes>
-          {/* Home */}
-          <Route path="/" element={<Home />} />
+    <LayoutWrapper>
 
-          {/* Interactive Pages */}
-          <Route path="/experience/:slug" element={<Experience />} />
-          <Route path="/destination/:slug" element={<Destination />} />
-          <Route path="/category/:slug" element={<Category />} />
-          <Route path="/category/:slug/tours" element={<CategoryTours />} />
-          <Route path="/holographic-journey" element={<HolographicJourney />} />
-          <Route path="/hologram-demo" element={<HologramDemo />} />
+      
 
-          {/* Basic Pages */}
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogDetails />} />
+      <Routes>
+        {/* Home */}
+        <Route path="/" element={<Home />} />
 
-          {/* Tours */}
-          <Route path="/tours" element={<Tours />} />
-          <Route path="/tour/:id" element={<SingleTour />} />
-          <Route path="/booking/:id" element={<Booking />} />
-          <Route path="/payment/:id" element={<Payment />} />
-          <Route path="/payment-success" element={<PaymentSuccess />} />
-          <Route path="/payment-failed" element={<PaymentFailed />} />
+        {/* Interactive */}
+        <Route path="/experience/:slug" element={<Experience />} />
+        <Route path="/destination/:slug" element={<Destination />} />
+        <Route path="/category/:slug" element={<Category />} />
+        <Route path="/category/:slug/tours" element={<CategoryTours />} />
+        <Route path="/holographic-journey" element={<HolographicJourney />} />
+        <Route path="/hologram-demo" element={<HologramDemo />} />
 
-          {/* User Auth */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+        {/* Static Pages */}
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogDetails />} />
 
-          {/* User Dashboard */}
-          <Route path="/dashboard" element={<UserDashboard />} />
-          <Route path="/my-bookings" element={<MyBookings />} />
+        {/* Existing Tour Flow (UNCHANGED) */}
+        <Route path="/tours" element={<Tours />} />
+        <Route path="/tour/:id" element={<SingleTour />} />
+        <Route path="/booking/:id" element={<Booking />} />
+        <Route path="/payment/:id" element={<Payment />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-failed" element={<PaymentFailed />} />
 
-          {/* Admin Auth */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/signup" element={<AdminSignup />} />
+        {/* Auth */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
-          {/* Admin Protected Pages */}
-          <Route
-            path="/admin/dashboard"
-            element={
-              <AdminProtected>
-                <AdminDashboard />
-              </AdminProtected>
-            }
-          />
+        {/* User */}
+        <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
 
-          <Route
-            path="/admin/add-tour"
-            element={
-              <AdminProtected>
-                <AddTour />
-              </AdminProtected>
-            }
-          />
+        {/* Admin Auth */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/signup" element={<AdminSignup />} />
 
-          <Route
-            path="/admin/manage-tours"
-            element={
-              <AdminProtected>
-                <ManageTours />
-              </AdminProtected>
-            }
-          />
+        {/* Admin Protected */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminProtected>
+              <AdminDashboard />
+            </AdminProtected>
+          }
+        />
+        <Route
+          path="/admin/add-tour"
+          element={
+            <AdminProtected>
+              <AddTour />
+            </AdminProtected>
+          }
+        />
+        <Route
+          path="/admin/manage-tours"
+          element={
+            <AdminProtected>
+              <ManageTours />
+            </AdminProtected>
+          }
+        />
+        <Route
+          path="/admin/view-bookings"
+          element={
+            <AdminProtected>
+              <ViewBookings />
+            </AdminProtected>
+          }
+        />
+        <Route
+          path="/admin/edit-tour/:id"
+          element={
+            <AdminProtected>
+              <EditTour />
+            </AdminProtected>
+          }
+        />
 
-          <Route
-            path="/admin/edit-tour/:id"
-            element={
-              <AdminProtected>
-                <EditTour />
-              </AdminProtected>
-            }
-          />
+        {/* Hologram */}
+        <Route path="/hologram-bali" element={<Bali />} />
+        <Route path="/hologram-goa" element={<Goa />} />
 
-          <Route
-            path="/admin/view-bookings"
-            element={
-              <AdminProtected>
-                <ViewBookings />
-              </AdminProtected>
-            }
-          />
+        {/* 🔥 FIXED & WORKING CUSTOM TOUR PAGE */}
+        <Route path="/tour/:slug" element={<TourDetails />} />
 
-          {/* Tourism Microsites */}
-          <Route path="/hologram-bali" element={<Bali />} />
-          <Route path="/hologram-goa" element={<Goa />} />
+      </Routes>
 
-        </Routes>
+      {/* <VoiceAssistant /> */}
       </LayoutWrapper>
+
     </BrowserRouter>
   );
 }

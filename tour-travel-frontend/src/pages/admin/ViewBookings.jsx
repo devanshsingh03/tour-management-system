@@ -9,6 +9,7 @@ export default function ViewBookings() {
   const [filter, setFilter] = useState("All");
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState("all");
 
   useEffect(() => {
     AOS.init({ duration: 900, once: true });
@@ -57,18 +58,26 @@ export default function ViewBookings() {
     }
   };
 
-  const filteredBookings =
-    filter === "All"
-      ? bookings
-      : bookings.filter((b) => b.status === filter);
+  // const filteredBookings =
+  //   filter === "All"
+  //     ? bookings
+  //     : bookings.filter((b) => b.status === filter);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#030617] text-white flex items-center justify-center">
-        Loading bookings...
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen bg-[#030617] text-white flex items-center justify-center">
+  //       Loading bookings...
+  //     </div>
+  //   );
+  // }
+  const filteredBookings =
+  filter === "All"
+    ? bookings
+    : bookings.filter(
+        (b) => b.status?.toLowerCase() === filter.toLowerCase()
+      );
+
+
 
   return (
     <div className="min-h-screen bg-[#030617] text-white p-10">

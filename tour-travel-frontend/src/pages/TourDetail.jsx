@@ -30,3 +30,26 @@
 // </div>
 // );
 // }
+
+import { useLocation } from "react-router-dom";
+import { ALL_TOURS } from "../data/tours";
+
+const TourDetails = () => {
+  const { pathname } = useLocation();
+  const slug = pathname.replace("/", "");
+  const tour = ALL_TOURS[slug];
+
+  if (!tour) return <h2>Tour not found</h2>;
+
+  return (
+    <div style={{ padding: 24 }}>
+      <img src={tour.images[0]} width="100%" height="350" />
+      <h1>{tour.title}</h1>
+      <p>{tour.location}</p>
+      <p>{tour.description}</p>
+      <h3>₹{tour.price}</h3>
+    </div>
+  );
+};
+
+export default TourDetails;

@@ -129,3 +129,28 @@ export const updateBookingStatus = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+export const getUserTravelStats = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const bookings = await Booking.find({ user: userId });
+
+    const stats = {
+      totalTrips: bookings.length,
+      confirmedTrips: bookings.filter(b => b.status === "confirmed").length,
+      pendingTrips: bookings.filter(b => b.status === "pending").length,
+      cancelledTrips: bookings.filter(b => b.status === "cancelled").length,
+      totalSpent: bookings
+        .filter(b => b.paymentStatus === "paid")
+        .reduce((sum, b) => sum + (b.amount || 0), 0),
+    };
+
+    res.json(stats);
+  } catch (err) {
+    console.error("Stats error:", err);
+    res.status(500).json({ message: "Failed to load stats" });
+  }
+};
+

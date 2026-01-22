@@ -1,6 +1,8 @@
+
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
@@ -8,8 +10,9 @@ import bookingRoutes from "./routes/bookingRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import tourRoutes from "./routes/tourRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
-dotenv.config();
+
 
 const app = express();
 if (!process.env.MONGO_URI) {
@@ -19,9 +22,13 @@ if (!process.env.JWT_SECRET) {
   throw new Error("JWT_SECRET is missing");
 }
 
+console.log("SERVER RAZORPAY KEY ID:", process.env.RAZORPAY_KEY_ID);
+console.log("SERVER RAZORPAY KEY SECRET:", process.env.RAZORPAY_KEY_SECRET);
+
+
 // Middlewares
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "*",
   credentials: true
 }));
 app.use(express.json());
@@ -31,6 +38,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/tours", tourRoutes);
 app.use("/api/user" , userRoutes);
+app.use("/api/payments", paymentRoutes);
 
 //Error Handler 
 app.use((err, req, res, next) => {

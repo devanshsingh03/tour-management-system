@@ -40,51 +40,141 @@ export default function SingleTour() {
     }
   };
 
-  const handleBooking = async () => {
-    const token = localStorage.getItem("token");
+//   const handleBooking = async () => {
+//     const token = localStorage.getItem("token");
 
-    if (!token) {
-      alert("Please login first to book a tour.");
-      return navigate("/login");
-    }
+//     if (!token) {
+//       alert("Please login first to book a tour.");
+//       return navigate("/login");
+//     }
 
-    if (!travelDate) {
-      return setError("Please select a travel date");
-    }
+//     if (!travelDate) {
+//       return setError("Please select a travel date");
+//     }
 
-    try {
-      setBookingLoading(true);
-      setError("");
+//     try {
+//       setBookingLoading(true);
+//       setError("");
 
       
 
-      const res = await axios.post(
-  `${BASE_URL}/bookings/create`,
-  {
-    tourId:tour._id,
-    travelers: travelers,
-    dateOfTravel: travelDate, 
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+//       const res = await axios.post(
+//   `${BASE_URL}/bookings/create`,
+//   {
+//     tourId:tour._id,
+//     travelers: travelers,
+//     dateOfTravel: travelDate, 
+//   },
+//   {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }
+// );
+
+
+
+//       alert("Booking successful!");
+//       navigate("/my-bookings");
+//     } catch (err) {
+//       console.error("Booking error:", err);
+//       setError(
+//         err?.response?.data?.message || "Failed to create booking. Try again."
+//       );
+//     } finally {
+//       setBookingLoading(false);
+//     }
+//   };
+
+      const handleBooking = async () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first to book a tour.");
+    return navigate("/login");
   }
-);
 
+  if (!travelDate) {
+    return setError("Please select a travel date");
+  }
 
+  try {
+    setBookingLoading(true);
+    setError("");
 
-      alert("Booking successful!");
-      navigate("/my-bookings");
-    } catch (err) {
-      console.error("Booking error:", err);
-      setError(
-        err?.response?.data?.message || "Failed to create booking. Try again."
-      );
-    } finally {
-      setBookingLoading(false);
-    }
-  };
+    // 1️⃣ CREATE BOOKING (paymentStatus = pending)
+    const bookingRes = await axios.post(
+      `${BASE_URL}/bookings/create`,
+      {
+        tourId: tour._id,
+        travelers: travelers,
+        dateOfTravel: travelDate,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const bookingId = bookingRes.data.booking._id;
+
+    // 2️⃣ CREATE PAYMENT ORDER
+    const paymentRes = await axios.post(
+      `${BASE_URL}/payments/create-order`,
+      { bookingId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // 3️⃣ OPEN RAZORPAY
+    const options = {
+      key: paymentRes.data.key,
+      amount: paymentRes.data.amount,
+      currency: paymentRes.data.currency,
+      name: "Tour Booking",
+      description: "Complete your booking payment",
+      order_id: paymentRes.data.orderId,
+
+      handler: async function (response) {
+        // 4️⃣ VERIFY PAYMENT
+        await axios.post(
+          `${BASE_URL}/payments/verify`,
+          {
+            ...response,
+            bookingId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        alert("Booking & Payment Successful!");
+        navigate("/payment-success");
+      },
+
+      theme: {
+        color: "#2563eb",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (err) {
+    console.error("Booking/Payment error:", err);
+    setError(
+      err?.response?.data?.message ||
+        "Failed to complete booking. Try again."
+    );
+  } finally {
+    setBookingLoading(false);
+  }
+};
 
   if (loading) {
     return (
@@ -166,7 +256,7 @@ export default function SingleTour() {
             disabled={bookingLoading}
             className="mt-6 w-full py-3 rounded-full bg-gradient-to-r from-[#00F2FE] to-[#4FACFE] text-black font-semibold"
           >
-            {bookingLoading ? "Booking..." : "Book Now"}
+            {bookingLoading ? "Processing..." : "Book And Pay"}
           </button>
         </div>
       </section>

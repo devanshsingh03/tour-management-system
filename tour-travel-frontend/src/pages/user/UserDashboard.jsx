@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import axios from "axios";
+import { BASE_URL } from "../../config";
+
 
 export default function UserDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [stats, setStats] = useState({
+  totalTrips: 0,
+  confirmedTrips: 0,
+  pendingTrips: 0,
+  cancelledTrips: 0,
+  totalSpent: 0,
+});
+
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
@@ -19,6 +30,30 @@ export default function UserDashboard() {
 
     setUser(JSON.parse(savedUser));
   }, []);
+
+  useEffect(() => {
+  const fetchStats = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await axios.get(
+        `${BASE_URL}/bookings/stats`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setStats(res.data);
+    } catch (err) {
+      console.error("Failed to fetch user stats", err);
+    }
+  };
+
+  fetchStats();
+}, []);
+
 
   if (!user) return null;
 
@@ -74,7 +109,7 @@ export default function UserDashboard() {
         </div>
 
         {/* Stats Section */}
-        <div
+        {/* <div
           data-aos="fade-up"
           data-aos-delay="350"
           className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-8 mt-12"
@@ -84,7 +119,7 @@ export default function UserDashboard() {
           <div className="grid md:grid-cols-3 gap-6 mt-6">
 
             <div className="text-center p-6 bg-black/40 border border-white/10 rounded-xl">
-              <h3 className="text-4xl font-extrabold text-blue-400">0</h3>
+              <h3 className="text-4xl font-extrabold text-blue-400">{stats.totalTrips}</h3>
               <p className="text-gray-300 mt-2">Bookings</p>
             </div>
 
@@ -99,7 +134,42 @@ export default function UserDashboard() {
             </div>
 
           </div>
-        </div>
+        </div> */}
+
+        {/* Stats Section */}
+<div
+  data-aos="fade-up"
+  data-aos-delay="350"
+  className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-8 mt-12"
+>
+  <h2 className="text-2xl font-bold">Your Travel Stats</h2>
+
+  <div className="grid md:grid-cols-3 gap-6 mt-6">
+
+    <div className="text-center p-6 bg-black/40 border border-white/10 rounded-xl">
+      <h3 className="text-4xl font-extrabold text-blue-400">
+        {stats.totalTrips}
+      </h3>
+      <p className="text-gray-300 mt-2">Bookings</p>
+    </div>
+
+    <div className="text-center p-6 bg-black/40 border border-white/10 rounded-xl">
+      <h3 className="text-4xl font-extrabold text-green-400">
+        {stats.confirmedTrips}
+      </h3>
+      <p className="text-gray-300 mt-2">Upcoming Trips</p>
+    </div>
+
+    <div className="text-center p-6 bg-black/40 border border-white/10 rounded-xl">
+      <h3 className="text-4xl font-extrabold text-purple-400">
+        {stats.cancelledTrips}
+      </h3>
+      <p className="text-gray-300 mt-2">Completed</p>
+    </div>
+
+  </div>
+</div>
+
 
       </div>
     </div>
